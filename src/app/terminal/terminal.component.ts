@@ -18,15 +18,14 @@ export class TerminalComponent implements OnInit {
     private typeItOut() {
         const speed = 30;
         setTimeout(() => {
-            const txt = `scribbler
-            [Entry mode; press Ctrl+D to save and quit; press Ctrl+C to quit without saving]
+            const txt = `env | grep tak
+            NAME=Hyungtak Jin
+            EMAIL=env.tak@gmail.com
+            GITHUB=tak-bro
+            BLOG=tak-bro.github.io
+            RESUME=https://docs.google.com/tak....
+            `;
 
-            ###todo for new year dinner party
-
-            - milk
-            - butter
-            - green onion
-            - lots and lots of kiwis 🥝`;
             if (this.index < txt.length) {
                 this.demoTerminal.nativeElement.innerHTML += txt.charAt(this.index);
                 this.index++;
