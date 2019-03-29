@@ -8,7 +8,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
     ]
 })
 export class TerminalComponent implements OnInit {
-    @ViewChild('demo') private demoTerminal: ElementRef;
+    @ViewChild('terminal') private demoTerminal: ElementRef;
     private index = 0;
 
     public ngOnInit() {
