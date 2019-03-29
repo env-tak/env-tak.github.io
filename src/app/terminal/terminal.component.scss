@@ -32,4 +32,12 @@
         white-space: pre-line;
         padding-top: 1rem;
     }
+
+}
+
+::ng-deep {
+     .highlight {
+        color: red;
+    }
+
 }
