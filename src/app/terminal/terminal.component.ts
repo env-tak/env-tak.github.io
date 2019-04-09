@@ -18,15 +18,16 @@ export class TerminalComponent implements OnInit {
     private typeItOut() {
         const speed = 30;
         setTimeout(() => {
-            const txt = `env | grep tak
-            NAME=Hyung<span class="highlight">t</span><span class="highlight">a</span><span class="highlight">k</span> Jin
-            EMAIL=env.<span class="highlight">t</span><span class="highlight">a</span><span class="highlight">k</span>@gmail.com
+            const text = `env | grep tak
+            NAME=Hyungtak Jin
+            EMAIL=env.tak@gmail.com
             GITHUB=tak-bro
             BLOG=https://tak-bro.github.io
             RESUME=https://docs.google.com/tak....
             `;
 
-            const typingWord = this.getParsedString(txt);
+            const spanText = this.setSpanTagWithKey(text, 'tak');
+            const typingWord = this.getParsedString(spanText);
             if (this.index < typingWord.length) {
                 this.demoTerminal.nativeElement.innerHTML += typingWord[this.index];
                 this.index++;
@@ -35,6 +36,12 @@ export class TerminalComponent implements OnInit {
                 }, speed);
             }
         }, speed);
+    }
+
+    private setSpanTagWithKey(text: string, key: string) {
+        const keyWithTag = key.split('').map(item => `<span class="highlight">${item}</span>`).join('');
+        const result = text.replace(new RegExp(key, 'gi'), keyWithTag);
+        return result;
     }
 
     private getParsedString(text: string) {
