@@ -16,14 +16,15 @@ export class TerminalComponent implements OnInit {
     }
 
     private typeItOut() {
-        const speed = 30;
+        const TYPING_SPEED = 30;
         setTimeout(() => {
             const text = `env | grep tak
             NAME=Hyungtak Jin
             EMAIL=env.tak@gmail.com
             GITHUB=tak-bro
             BLOG=https://tak-bro.github.io
-            RESUME=https://docs.google.com/tak....
+            KOREAN_RESUME=http://bit.ly/tak_resume_kor
+            ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
 
             const spanText = this.setSpanTagWithKey(text, 'tak');
@@ -33,14 +34,14 @@ export class TerminalComponent implements OnInit {
                 this.index++;
                 setTimeout(() => {
                     this.typeItOut();
-                }, speed);
+                }, TYPING_SPEED);
             }
-        }, speed);
+        }, TYPING_SPEED);
     }
 
     private setSpanTagWithKey(text: string, key: string) {
-        const keyWithTag = key.split('').map(item => `<span class="highlight">${item}</span>`).join('');
-        const result = text.replace(new RegExp(key, 'gi'), keyWithTag);
+        const taggedKey = key.split('').map(item => `<span class="highlight">${item}</span>`).join('');
+        const result = text.replace(new RegExp(key, 'gi'), taggedKey);
         return result;
     }
 
