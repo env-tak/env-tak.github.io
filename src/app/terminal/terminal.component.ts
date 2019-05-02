@@ -27,13 +27,13 @@ export class TerminalComponent implements OnInit {
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
 
-        // const replacedText = this.addHyperLink(text);
-        const replacedTextWithSpan = this.setSpanTagByKey(text, 'tak');
+        const replacedText = this.addHyperLink(text);
+        const replacedTextWithSpan = this.setSpanTagByKey(replacedText, 'tak');
         this.typingWord = this.getParsedString(replacedTextWithSpan);
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 30;
+        const TYPING_SPEED = 0.1;
         setTimeout(() => {
             if (this.index < this.typingWord.length) {
                 this.demoTerminal.nativeElement.innerHTML += this.typingWord[this.index];
@@ -58,7 +58,8 @@ export class TerminalComponent implements OnInit {
         replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
 
         // Change email addresses to mailto:: links.
-        const replacePattern3 = /(\w+@[a-zA-Z_]+?(\.[a-zA-Z]{2,6})+)/gim;
+        // const replacePattern3 = /(\w+@[a-zA-Z_]+?(\.[a-zA-Z]{2,6})+)/gim;
+        const replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
         replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
 
         return replacedText;
@@ -66,15 +67,22 @@ export class TerminalComponent implements OnInit {
 
     private setSpanTagByKey(text: string, key: string) {
         const taggedKey = key.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
-        const result = text.replace(new RegExp(key, 'gi'), taggedKey);
-        return result;
+        const splittedHtmlText = text.split(/(<.+?>)(.+?)(<\/.+?>)/g).map(splitted => {
+            const hasATag = splitted.includes('<a') || splitted.includes('</a>');
+            if (hasATag) {
+                return splitted;
+            }
+            return splitted.replace(new RegExp(key, 'gi'), taggedKey);
+        }).join('');
+
+        return splittedHtmlText;
     }
 
     private getParsedString(text: string) {
-        const fragments = text.split(/(\<+[a-zA-Z0-9\=\"\s]+\>+[^<]+\<\/+[a-zA-Z0-9]+\>)/gi);
+        const fragments = text.split(/(\<[^>]*>+[^<]+\<\/+[a-zA-Z0-9]+\>)/gi);
         const typingWord = [];
         fragments.map((word) => {
-            if (word.includes('<span')) {
+            if (word.includes('<span') || word.includes('<a')) {
                 typingWord.push(word);
             } else {
                 word.split('').map(tmp => typingWord.push(tmp));
