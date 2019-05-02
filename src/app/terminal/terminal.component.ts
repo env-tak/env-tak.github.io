@@ -10,15 +10,15 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 export class TerminalComponent implements OnInit {
     @ViewChild('terminal') private demoTerminal: ElementRef;
     private index = 0;
+    private typingWord;
 
     public ngOnInit() {
+        this.setTypingWord();
         this.typeItOut();
     }
 
-    private typeItOut() {
-        const TYPING_SPEED = 30;
-        setTimeout(() => {
-            const text = `env | grep tak
+    private setTypingWord() {
+        const text = `env | grep tak
             NAME=Hyungtak Jin
             EMAIL=env.tak@gmail.com
             GITHUB=tak-bro
@@ -27,10 +27,16 @@ export class TerminalComponent implements OnInit {
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
 
-            const spanText = this.setSpanTagWithKey(text, 'tak');
-            const typingWord = this.getParsedString(spanText);
-            if (this.index < typingWord.length) {
-                this.demoTerminal.nativeElement.innerHTML += typingWord[this.index];
+        // const replacedText = this.addHyperLink(text);
+        const replacedTextWithSpan = this.setSpanTagByKey(text, 'tak');
+        this.typingWord = this.getParsedString(replacedTextWithSpan);
+    }
+
+    private typeItOut() {
+        const TYPING_SPEED = 30;
+        setTimeout(() => {
+            if (this.index < this.typingWord.length) {
+                this.demoTerminal.nativeElement.innerHTML += this.typingWord[this.index];
                 this.index++;
                 setTimeout(() => {
                     this.typeItOut();
@@ -39,7 +45,26 @@ export class TerminalComponent implements OnInit {
         }, TYPING_SPEED);
     }
 
-    private setSpanTagWithKey(text: string, key: string) {
+    // refer: https://stackoverflow.com/questions/37684/how-to-replace-plain-urls-with-links
+    private addHyperLink(text: string) {
+        let replacedText;
+
+        // URLs starting with http://, https://, or ftp://
+        const replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+        replacedText = text.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+        // URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+        const replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+        replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+        // Change email addresses to mailto:: links.
+        const replacePattern3 = /(\w+@[a-zA-Z_]+?(\.[a-zA-Z]{2,6})+)/gim;
+        replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+        return replacedText;
+    }
+
+    private setSpanTagByKey(text: string, key: string) {
         const taggedKey = key.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
         const result = text.replace(new RegExp(key, 'gi'), taggedKey);
         return result;
