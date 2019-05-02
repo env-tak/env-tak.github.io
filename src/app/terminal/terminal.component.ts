@@ -40,7 +40,7 @@ export class TerminalComponent implements OnInit {
     }
 
     private setSpanTagWithKey(text: string, key: string) {
-        const taggedKey = key.split('').map(item => `<span class="highlight">${item}</span>`).join('');
+        const taggedKey = key.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
         const result = text.replace(new RegExp(key, 'gi'), taggedKey);
         return result;
     }
