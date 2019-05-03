@@ -8,17 +8,12 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
     ]
 })
 export class TerminalComponent implements OnInit {
+
     @ViewChild('terminal') private demoTerminal: ElementRef;
+
+    private typingWord: string[];
     private index = 0;
-    private typingWord;
-
-    public ngOnInit() {
-        this.setTypingWord();
-        this.typeItOut();
-    }
-
-    private setTypingWord() {
-        const text = `env | grep tak
+    private terminalText = `env | grep tak
             NAME=Hyungtak Jin
             EMAIL=env.tak@gmail.com
             GITHUB=tak-bro
@@ -27,15 +22,22 @@ export class TerminalComponent implements OnInit {
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
 
-        const replacedText = this.addHyperLink(text);
-        const replacedTextWithSpan = this.setSpanTagByKey(replacedText, 'tak');
-        this.typingWord = this.getParsedString(replacedTextWithSpan);
+    public ngOnInit() {
+        this.setTypingWord();
+        this.typeItOut();
+    }
+
+    private setTypingWord() {
+        // const hyperLinkText = this.addHyperLink(this.terminalText);
+        const replacedText = this.addSpanTagByKey(this.terminalText, 'tak');
+        this.typingWord = this.getParsedString(replacedText);
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 0.1;
+        const TYPING_SPEED = 30;
         setTimeout(() => {
-            if (this.index < this.typingWord.length) {
+            const isDone = this.index >= this.typingWord.length;
+            if (!isDone) {
                 this.demoTerminal.nativeElement.innerHTML += this.typingWord[this.index];
                 this.index++;
                 setTimeout(() => {
@@ -43,6 +45,10 @@ export class TerminalComponent implements OnInit {
                 }, TYPING_SPEED);
             }
         }, TYPING_SPEED);
+    }
+
+    private deleteAllHtmlTag(text: string) {
+        return text.replace(/<(?:.|\n)*?>/gm, '');
     }
 
     // refer: https://stackoverflow.com/questions/37684/how-to-replace-plain-urls-with-links
@@ -65,24 +71,30 @@ export class TerminalComponent implements OnInit {
         return replacedText;
     }
 
-    private setSpanTagByKey(text: string, key: string) {
+    private addSpanTagByKey(text: string, key: string) {
+        // console.log(text.split(/(\<[^>]*>+[^<]+\<\/+[a-zA-Z0-9]+\>)/gi)); // tag 포함 ['123', '<a href="asdsa">asdas</a>', 'asdas']
+        // console.log(text.split(/(<[^>]*>)/gi)); // tag 별로 나누기 ['123', '<a href="asd">', 'asdasd', '</a>', 'asdas']
+        // console.log(text.split(/(<.+?>)(.+?)(<\/.+?>)/g));// tag 별로 나누기 ['123', '<a href="asd">', 'asdasd', '</a>', 'asdas']
+        // const replacedText = text.split(/(<.+?>)(.+?)(<\/.+?>)/g).map(splited => {
+        //     const hasATag = splited.includes('<a') || splited.includes('</a');
+        //     if (hasATag) {
+        //         return splited;
+        //     } else {
+        //         return splited.replace(new RegExp(key, 'gi'), taggedKey);
+        //     }
+        // }).join('');
         const taggedKey = key.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
-        const splittedHtmlText = text.split(/(<.+?>)(.+?)(<\/.+?>)/g).map(splitted => {
-            const hasATag = splitted.includes('<a') || splitted.includes('</a>');
-            if (hasATag) {
-                return splitted;
-            }
-            return splitted.replace(new RegExp(key, 'gi'), taggedKey);
-        }).join('');
-
-        return splittedHtmlText;
+        const replacedText = text.replace(new RegExp(key, 'gi'), taggedKey);
+        return replacedText;
     }
 
     private getParsedString(text: string) {
-        const fragments = text.split(/(\<[^>]*>+[^<]+\<\/+[a-zA-Z0-9]+\>)/gi);
+        // const fragments = text.split(/(\<[^>]*>+[^<]+\<\/+[a-zA-Z0-9]+\>)/gi);
+        const fragments = text.split(/(\<+[a-zA-Z0-9\=\"\s]+\>+[^<]+\<\/+[a-zA-Z0-9]+\>)/gi);
         const typingWord = [];
         fragments.map((word) => {
-            if (word.includes('<span') || word.includes('<a')) {
+            const hasSpanTag = word.includes('<span');
+            if (hasSpanTag) {
                 typingWord.push(word);
             } else {
                 word.split('').map(tmp => typingWord.push(tmp));
