@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RegexpService } from './regexp.service';
+import { RegExpService } from './regexp.service';
 
-describe('RegexpService', () => {
+describe('RegExpService', () => {
     beforeEach(() => TestBed.configureTestingModule({}));
 
     it('should be created', () => {
-        const service: RegexpService = TestBed.get(RegexpService);
+        const service: RegExpService = TestBed.get(RegExpService);
         expect(service).toBeTruthy();
     });
 
     it('should delete all html tags in texst', () => {
-        const service: RegexpService = TestBed.get(RegexpService);
+        const service: RegExpService = TestBed.get(RegExpService);
         const testStr = 'This is <strong>test</strong> <a href="test">string</a>.';
         const expectedStr = 'This is test string.';
 
@@ -21,7 +21,7 @@ describe('RegexpService', () => {
 
 
     it('should add a tag when text starting with http://, https://, ftp://', () => {
-        const service: RegexpService = TestBed.get(RegexpService);
+        const service: RegExpService = TestBed.get(RegExpService);
         const testStr = 'https://test.url';
         const expectedStr = `<a href="${testStr}" target="_blank">${testStr}</a>`;
 
@@ -30,7 +30,7 @@ describe('RegexpService', () => {
     });
 
     it('should add a tag when text starting with www', () => {
-        const service: RegexpService = TestBed.get(RegexpService);
+        const service: RegExpService = TestBed.get(RegExpService);
         const testStr = 'www.test.url';
         const expectedStr = `<a href="http://${testStr}" target="_blank">${testStr}</a>`;
 
@@ -39,7 +39,7 @@ describe('RegexpService', () => {
     });
 
     it('should add a email tag', () => {
-        const service: RegexpService = TestBed.get(RegexpService);
+        const service: RegExpService = TestBed.get(RegExpService);
         const testStr = 'njirtak@gmail.com';
         const expectedStr = `<a href="mailto:${testStr}">${testStr}</a>`;
 

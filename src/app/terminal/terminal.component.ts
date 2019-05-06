@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { RegExpService } from '../services/regexp/regexp.service';
 
 @Component({
     selector: 'prtf-terminal',
@@ -22,6 +23,9 @@ export class TerminalComponent implements OnInit {
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
 
+    constructor(regExpService: RegExpService) {
+    }
+
     public ngOnInit() {
         this.setTypingWord();
         this.typeItOut();
@@ -30,7 +34,6 @@ export class TerminalComponent implements OnInit {
     }
 
     private setTypingWord() {
-        // const hyperLinkText = this.addHyperLink(this.terminalText);
         const replacedText = this.addSpanTagByKey(this.terminalText, 'tak');
         this.typingWord = this.getParsedString(replacedText);
     }
