@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { RegExpService } from '../services/regexp/regexp.service';
 
 @Component({
     selector: 'prtf-terminal',
@@ -25,8 +24,6 @@ export class TerminalComponent implements OnInit {
 
     public ngOnInit() {
         this.setTypingWord();
-        // TODO: typeItOut 함수 아래처럼 사용하기
-        // http://jsfiddle.net/creed88/VG8MJ/1/
         this.typeItOut();
     }
 
