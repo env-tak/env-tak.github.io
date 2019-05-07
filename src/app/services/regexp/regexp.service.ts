@@ -31,4 +31,12 @@ export class RegExpService {
         const replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
         return text.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
     }
+
+    splitStringThatContainsTag(text: string) {
+        return text.split(/(\<[^>]*>+[^<]+\<\/+[a-zA-Z0-9]+\>)/gi);
+    }
+
+    splitStringByTag(text: string) {
+        return text.split(/(<.+?>)(.+?)(<\/.+?>)/g);
+    }
 }
