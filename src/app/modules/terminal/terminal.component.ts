@@ -8,17 +8,12 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
     ]
 })
 export class TerminalComponent implements OnInit {
+
     @ViewChild('terminal') private demoTerminal: ElementRef;
+
+    private typingWord: string[];
     private index = 0;
-
-    public ngOnInit() {
-        this.typeItOut();
-    }
-
-    private typeItOut() {
-        const TYPING_SPEED = 30;
-        setTimeout(() => {
-            const text = `env | grep tak
+    private terminalText = `env | grep tak
             NAME=Hyungtak Jin
             EMAIL=env.tak@gmail.com
             GITHUB=tak-bro
@@ -27,10 +22,22 @@ export class TerminalComponent implements OnInit {
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
 
-            const spanText = this.setSpanTagWithKey(text, 'tak');
-            const typingWord = this.getParsedString(spanText);
-            if (this.index < typingWord.length) {
-                this.demoTerminal.nativeElement.innerHTML += typingWord[this.index];
+    public ngOnInit() {
+        this.setTypingWord();
+        this.typeItOut();
+    }
+
+    private setTypingWord() {
+        const replacedText = this.addSpanTagByKey(this.terminalText, 'tak');
+        this.typingWord = this.getParsedString(replacedText);
+    }
+
+    private typeItOut() {
+        const TYPING_SPEED = 30;
+        setTimeout(() => {
+            const isDone = this.index >= this.typingWord.length;
+            if (!isDone) {
+                this.demoTerminal.nativeElement.innerHTML += this.typingWord[this.index];
                 this.index++;
                 setTimeout(() => {
                     this.typeItOut();
@@ -39,17 +46,18 @@ export class TerminalComponent implements OnInit {
         }, TYPING_SPEED);
     }
 
-    private setSpanTagWithKey(text: string, key: string) {
-        const taggedKey = key.split('').map(item => `<span class="highlight">${item}</span>`).join('');
-        const result = text.replace(new RegExp(key, 'gi'), taggedKey);
-        return result;
+    private addSpanTagByKey(text: string, key: string) {
+        const taggedKey = key.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
+        const replacedText = text.replace(new RegExp(key, 'gi'), taggedKey);
+        return replacedText;
     }
 
     private getParsedString(text: string) {
         const fragments = text.split(/(\<+[a-zA-Z0-9\=\"\s]+\>+[^<]+\<\/+[a-zA-Z0-9]+\>)/gi);
         const typingWord = [];
         fragments.map((word) => {
-            if (word.includes('<span')) {
+            const hasSpanTag = word.includes('<span');
+            if (hasSpanTag) {
                 typingWord.push(word);
             } else {
                 word.split('').map(tmp => typingWord.push(tmp));

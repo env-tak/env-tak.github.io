@@ -1,11 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { RegExpService } from './core/services/regexp/regexp.service';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { TerminalComponent } from './terminal/terminal.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { HomeComponent } from './modules/home/home.component';
+import { TerminalComponent } from './modules/terminal/terminal.component';
+import { NotFoundComponent } from './modules/not-found/not-found.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +20,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
         BrowserModule,
         AppRoutingModule
     ],
-    providers: [],
+    providers: [RegExpService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

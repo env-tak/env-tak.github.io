@@ -45,8 +45,13 @@
 }
 
 ::ng-deep {
-     .highlight {
+
+    .highlight {
         color: var(--accent-color);
+    }
+
+    a {
+        color: inherit;
     }
 
 }
