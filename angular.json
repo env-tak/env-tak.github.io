@@ -32,7 +32,10 @@
               "src/assets/scss/aurora-theme-base.css",
               "src/assets/scss/urku.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.js",
+              "./node_modules/fullpage.js/dist/fullpage.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -92,7 +95,10 @@
               "src/assets/scss/aurora-theme-base.css",
               "src/assets/scss/urku.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.js",
+              "./node_modules/fullpage.js/dist/fullpage.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
