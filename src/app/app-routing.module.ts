@@ -7,6 +7,7 @@ import { NotFoundComponent } from './modules/not-found/not-found.component';
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
+    { path: 'full-page', loadChildren: './modules/full-page/full-page.module#FullPageModule' },
 
     // not found
     { path: 'not-found', component: NotFoundComponent, pathMatch: 'full' },
