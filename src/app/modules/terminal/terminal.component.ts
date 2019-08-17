@@ -16,8 +16,8 @@ export class TerminalComponent implements OnInit {
     private terminalText = `env | grep tak
             NAME=Hyungtak Jin
             EMAIL=env.tak@gmail.com
-            GITHUB=njir
-            BLOG=https://njir.github.io
+            GITHUB=env-tak
+            BLOG=https://env-tak.github.io
             KOREAN_RESUME=http://bit.ly/tak_resume_kor
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
@@ -36,6 +36,10 @@ export class TerminalComponent implements OnInit {
         const TYPING_SPEED = 30;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
+            if (isDone) {
+                this.setHyperLinkToTerminal();
+            }
+
             if (!isDone) {
                 this.demoTerminal.nativeElement.innerHTML += this.typingWord[this.index];
                 this.index++;
@@ -58,7 +62,6 @@ export class TerminalComponent implements OnInit {
         const spanTagStrings = matchedArray.map(arr => {
             return arr.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
         });
-
         const replacedText = replaceAll(text, new RegExp(key, 'gi'), spanTagStrings.shift());
         return replacedText;
     }
@@ -75,5 +78,21 @@ export class TerminalComponent implements OnInit {
             }
         });
         return typingWord;
+    }
+
+    private setHyperLinkToTerminal() {
+        const text = this.addHyperLinkTag(this.demoTerminal.nativeElement.innerHTML);
+        this.demoTerminal.nativeElement.innerHTML = text;
+    }
+
+    private addHyperLinkTag(text: string) {
+        const checkDomain = /(\b(https?|):\/\/.*)/g;
+        const parseString = (tag, ...args) => {
+            const stripHtmlTags = tag.replace(/<[^>]*>/gi, '');
+            return `<a href=${stripHtmlTags} target="_blank">${tag}</a>`;
+        };
+
+        const innerHtmlContent = text.replace(checkDomain, parseString);
+        return innerHtmlContent;
     }
 }
