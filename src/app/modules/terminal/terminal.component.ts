@@ -16,8 +16,8 @@ export class TerminalComponent implements OnInit {
     private terminalText = `env | grep tak
             NAME=Hyungtak Jin
             EMAIL=env.tak@gmail.com
-            GITHUB=tak-bro
-            BLOG=https://tak-bro.github.io
+            GITHUB=njir
+            BLOG=https://njkr.github.io
             KOREAN_RESUME=http://bit.ly/tak_resume_kor
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
