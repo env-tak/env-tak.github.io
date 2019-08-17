@@ -16,15 +16,15 @@ export class TerminalComponent implements OnInit {
     private terminalText = `env | grep tak
             NAME=Hyungtak Jin
             EMAIL=env.tak@gmail.com
-            GITHUB=env-tak
-            BLOG=https://env-tak.github.io
+            GITHUB=tak-bro
+            BLOG=https://tak-bro.github.io
             KOREAN_RESUME=http://bit.ly/tak_resume_kor
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
 
     public ngOnInit() {
         this.setTypingWord();
-        this.typeItOut();
+        setTimeout(() => this.typeItOut(), 1500);
     }
 
     private setTypingWord() {
@@ -33,7 +33,7 @@ export class TerminalComponent implements OnInit {
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 30;
+        const TYPING_SPEED = 25;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
             if (isDone) {
