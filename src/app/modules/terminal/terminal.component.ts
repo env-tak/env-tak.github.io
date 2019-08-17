@@ -17,7 +17,7 @@ export class TerminalComponent implements OnInit {
             NAME=Hyungtak Jin
             EMAIL=env.tak@gmail.com
             GITHUB=njir
-            BLOG=https://njkr.github.io
+            BLOG=https://njir.github.io
             KOREAN_RESUME=http://bit.ly/tak_resume_kor
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
@@ -47,8 +47,19 @@ export class TerminalComponent implements OnInit {
     }
 
     private addSpanTagByKey(text: string, key: string) {
-        const taggedKey = key.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
-        const replacedText = text.replace(new RegExp(key, 'gi'), taggedKey);
+        const replaceAll = (str, searchStr, replaceStr) => str.split(searchStr).join(replaceStr);
+
+        const regex = new RegExp(key, 'gi');
+        const matchedArray = text.match(regex);
+        if (!matchedArray || matchedArray.length === 0) {
+            return text;
+        }
+
+        const spanTagStrings = matchedArray.map(arr => {
+            return arr.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
+        });
+
+        const replacedText = replaceAll(text, new RegExp(key, 'gi'), spanTagStrings.shift());
         return replacedText;
     }
 
