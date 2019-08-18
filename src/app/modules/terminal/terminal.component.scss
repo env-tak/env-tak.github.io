@@ -42,6 +42,15 @@
             transform: translate3d(0, 0, 0);
         }
     }
+
+    .fill-avatar {
+
+        #eyes {
+
+            fill: #3c3c3d !important;
+        }
+
+    }
 }
 
 ::ng-deep {

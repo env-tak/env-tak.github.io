@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
+import * as Vivus from 'vivus';
+
 @Component({
     selector: 'prtf-terminal',
     templateUrl: './terminal.component.html',
@@ -11,6 +13,7 @@ export class TerminalComponent implements OnInit {
 
     @ViewChild('terminal') private demoTerminal: ElementRef;
 
+    public fillColor = '#fff';
     private typingWord: string[];
     private index = 0;
     private terminalText = `env | grep tak
@@ -24,7 +27,7 @@ export class TerminalComponent implements OnInit {
 
     public ngOnInit() {
         this.setTypingWord();
-        setTimeout(() => this.typeItOut(), 1500);
+        setTimeout(() => this.typeItOut(), 10);
     }
 
     private setTypingWord() {
@@ -33,11 +36,19 @@ export class TerminalComponent implements OnInit {
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 25;
+        const TYPING_SPEED = 1;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
             if (isDone) {
                 this.setHyperLinkToTerminal();
+                const vivusCallback = () => {
+                    console.log('123');
+                    this.fillColor = '#3c3c3d';
+                };
+                const x = new Vivus('avatar', {
+                    duration: 200,
+                    start: 'autostart'
+                }, vivusCallback);
             }
 
             if (!isDone) {
