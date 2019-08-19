@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
+import * as Vivus from 'vivus';
+
 @Component({
     selector: 'prtf-terminal',
     templateUrl: './terminal.component.html',
@@ -11,6 +13,7 @@ export class TerminalComponent implements OnInit {
 
     @ViewChild('terminal') private demoTerminal: ElementRef;
 
+    public fillColor = '#fff';
     private typingWord: string[];
     private index = 0;
     private terminalText = `env | grep tak
@@ -24,7 +27,7 @@ export class TerminalComponent implements OnInit {
 
     public ngOnInit() {
         this.setTypingWord();
-        this.typeItOut();
+        setTimeout(() => this.typeItOut(), 10);
     }
 
     private setTypingWord() {
@@ -33,9 +36,14 @@ export class TerminalComponent implements OnInit {
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 30;
+        const TYPING_SPEED = 1;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
+            if (isDone) {
+                this.setHyperLinkToTerminal();
+                this.drawSvgFace();
+            }
+
             if (!isDone) {
                 this.demoTerminal.nativeElement.innerHTML += this.typingWord[this.index];
                 this.index++;
@@ -47,8 +55,18 @@ export class TerminalComponent implements OnInit {
     }
 
     private addSpanTagByKey(text: string, key: string) {
-        const taggedKey = key.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
-        const replacedText = text.replace(new RegExp(key, 'gi'), taggedKey);
+        const replaceAll = (str, searchStr, replaceStr) => str.split(searchStr).join(replaceStr);
+
+        const regex = new RegExp(key, 'gi');
+        const matchedArray = text.match(regex);
+        if (!matchedArray || matchedArray.length === 0) {
+            return text;
+        }
+
+        const spanTagStrings = matchedArray.map(arr => {
+            return arr.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
+        });
+        const replacedText = replaceAll(text, new RegExp(key, 'gi'), spanTagStrings.shift());
         return replacedText;
     }
 
@@ -64,5 +82,31 @@ export class TerminalComponent implements OnInit {
             }
         });
         return typingWord;
+    }
+
+    private setHyperLinkToTerminal() {
+        const text = this.addHyperLinkTag(this.demoTerminal.nativeElement.innerHTML);
+        this.demoTerminal.nativeElement.innerHTML = text;
+    }
+
+    private addHyperLinkTag(text: string) {
+        const checkDomain = /(\b(https?|):\/\/.*)/g;
+        const parseString = (tag, ...args) => {
+            const stripHtmlTags = tag.replace(/<[^>]*>/gi, '');
+            return `<a href=${stripHtmlTags} target="_blank">${tag}</a>`;
+        };
+
+        const innerHtmlContent = text.replace(checkDomain, parseString);
+        return innerHtmlContent;
+    }
+
+    private drawSvgFace() {
+        const fillEyesColor = () => {
+            this.fillColor = '#3c3c3d';
+        };
+        const svgFace = new Vivus('avatar', {
+            duration: 200,
+            start: 'autostart'
+        }, fillEyesColor);
     }
 }
