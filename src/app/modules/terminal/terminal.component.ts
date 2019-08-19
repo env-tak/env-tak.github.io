@@ -41,14 +41,7 @@ export class TerminalComponent implements OnInit {
             const isDone = this.index >= this.typingWord.length;
             if (isDone) {
                 this.setHyperLinkToTerminal();
-                const vivusCallback = () => {
-                    console.log('123');
-                    this.fillColor = '#3c3c3d';
-                };
-                const x = new Vivus('avatar', {
-                    duration: 200,
-                    start: 'autostart'
-                }, vivusCallback);
+                this.drawSvgFace();
             }
 
             if (!isDone) {
@@ -105,5 +98,15 @@ export class TerminalComponent implements OnInit {
 
         const innerHtmlContent = text.replace(checkDomain, parseString);
         return innerHtmlContent;
+    }
+
+    private drawSvgFace() {
+        const fillEyesColor = () => {
+            this.fillColor = '#3c3c3d';
+        };
+        const svgFace = new Vivus('avatar', {
+            duration: 200,
+            start: 'autostart'
+        }, fillEyesColor);
     }
 }
