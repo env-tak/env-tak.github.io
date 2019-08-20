@@ -43,13 +43,8 @@
         }
     }
 
-    .fill-avatar {
-
-        #eyes {
-
-            fill: #3c3c3d !important;
-        }
-
+    #avatar {
+        display: none;
     }
 }
 
@@ -63,4 +58,7 @@
         color: inherit;
     }
 
+    path {
+        transition: stroke 1s ease-in-out;
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
 import * as Vivus from 'vivus';
 
@@ -13,7 +13,10 @@ export class TerminalComponent implements OnInit {
 
     @ViewChild('terminal') private demoTerminal: ElementRef;
 
-    public fillColor = '#fff';
+    public eyeColor = '#fff';
+    public eyeStrokeWidth = '1';
+    public svgFaceDisplay = 'none';
+
     private typingWord: string[];
     private index = 0;
     private terminalText = `env | grep tak
@@ -24,6 +27,9 @@ export class TerminalComponent implements OnInit {
             KOREAN_RESUME=http://bit.ly/tak_resume_kor
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
+
+    constructor() {
+    }
 
     public ngOnInit() {
         this.setTypingWord();
@@ -101,12 +107,15 @@ export class TerminalComponent implements OnInit {
     }
 
     private drawSvgFace() {
+        this.svgFaceDisplay = 'block';
         const fillEyesColor = () => {
-            this.fillColor = '#3c3c3d';
+            this.eyeColor = '#3c3c3d';
+            this.eyeStrokeWidth = '25';
         };
         const svgFace = new Vivus('avatar', {
             duration: 200,
-            start: 'autostart'
+            type: 'delayed',
+            animTimingFunction: Vivus.EASE
         }, fillEyesColor);
     }
 }
