@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MnFullpageModule } from 'ngx-fullpage';
 
 import { FooterComponent } from './core/footer/footer.component';
 import { RegExpService } from './core/services/regexp/regexp.service';
@@ -23,7 +22,6 @@ import { NotFoundComponent } from './modules/not-found/not-found.component';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        MnFullpageModule.forRoot()
     ],
     providers: [RegExpService],
     bootstrap: [AppComponent]
