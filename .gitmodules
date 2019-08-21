@@ -1,0 +1,4 @@
+[submodule="env-tak"]
+    path=dist
+    url=git@github.com:env-tak/env-tak.github.io.git
+    branch=gh-pages

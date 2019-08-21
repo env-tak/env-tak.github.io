@@ -18,8 +18,7 @@ export class TerminalComponent implements OnInit {
             GITHUB=tak-bro
             LINKEDIN=https://www.linkedin.com/in/hyungtak/
             KOREAN_RESUME=http://bit.ly/tak_resume_kor
-            ENGLISH_RESUME=http://bit.ly/tak_resume_eng
-            `;
+            ENGLISH_RESUME=http://bit.ly/tak_resume_eng`;
 
     constructor() {
     }
@@ -36,7 +35,7 @@ export class TerminalComponent implements OnInit {
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 20;
+        const TYPING_SPEED = 30;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
             if (isDone) {
