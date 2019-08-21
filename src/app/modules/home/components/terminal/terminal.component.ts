@@ -1,6 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-
-import * as Vivus from 'vivus';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
     selector: 'prtf-terminal',
@@ -12,10 +10,6 @@ import * as Vivus from 'vivus';
 export class TerminalComponent implements OnInit {
 
     @ViewChild('terminal') private demoTerminal: ElementRef;
-
-    public eyeColor = '#fff';
-    public eyeStrokeWidth = '1';
-    public svgFaceDisplay = 'none';
 
     private typingWord: string[];
     private index = 0;
@@ -33,7 +27,7 @@ export class TerminalComponent implements OnInit {
 
     public ngOnInit() {
         this.setTypingWord();
-        setTimeout(() => this.typeItOut(), 10);
+        setTimeout(() => this.typeItOut(), 1500);
     }
 
     private setTypingWord() {
@@ -42,12 +36,11 @@ export class TerminalComponent implements OnInit {
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 1;
+        const TYPING_SPEED = 25;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
             if (isDone) {
                 this.setHyperLinkToTerminal();
-                this.drawSvgFace();
             }
 
             if (!isDone) {
@@ -104,18 +97,5 @@ export class TerminalComponent implements OnInit {
 
         const innerHtmlContent = text.replace(checkDomain, parseString);
         return innerHtmlContent;
-    }
-
-    private drawSvgFace() {
-        this.svgFaceDisplay = 'block';
-        const fillEyesColor = () => {
-            this.eyeColor = '#3c3c3d';
-            this.eyeStrokeWidth = '25';
-        };
-        const svgFace = new Vivus('avatar', {
-            duration: 200,
-            type: 'delayed',
-            animTimingFunction: Vivus.EASE
-        }, fillEyesColor);
     }
 }

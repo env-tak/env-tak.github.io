@@ -1,19 +1,4 @@
 :host {
-    /* tak section */
-    .tak {
-        text-align: center;
-        background-color: var(--bg-color);
-        padding: 2rem 0 10rem 0;
-    }
-
-    .tak__title {
-        font-weight: 900;
-        color: var(--primary-color);
-    }
-
-    .tak__description {
-        margin: -1rem auto 2rem auto;
-    }
 
     .tak__terminal {
         width: 60%;
@@ -26,11 +11,26 @@
         min-height: 285px;
         animation: fadeUp 2s;
         box-shadow: 0px 12px 36.8px 9.2px rgba(0, 0, 0, 0.1);
-    }
 
-    .tak__terminal pre {
-        white-space: pre-line;
-        padding-top: 1rem;
+        pre {
+            white-space: pre-line;
+            padding-top: 1rem;
+        }
+
+        .shell-session {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: #232323;
+            color: #e6e1dc;
+
+            .name {
+                color: #cda869;
+            }
+            .dash {
+                color: #a5c261;
+            }
+        }
     }
 
     @keyframes fadeUp {
@@ -52,9 +52,5 @@
 
     a {
         color: inherit;
-    }
-
-    path {
-        transition: stroke 1s ease-in-out;
     }
 }
