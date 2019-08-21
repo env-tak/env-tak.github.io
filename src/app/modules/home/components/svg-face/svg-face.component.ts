@@ -4,9 +4,7 @@ import * as Vivus from 'vivus';
 @Component({
     selector: 'prtf-svg-face',
     templateUrl: './svg-face.component.html',
-    styleUrls: [
-        './svg-face.component.scss'
-    ]
+    styleUrls: ['./svg-face.component.scss']
 })
 export class SvgFaceComponent implements OnInit {
 
@@ -24,13 +22,17 @@ export class SvgFaceComponent implements OnInit {
 
     private drawSvgFace() {
         const afterDrawed = () => {
-            this.eyeColor = '#3c3c3d';
-            this.eyeStrokeWidth = '25';
+            this.fillEyeColor();
         };
         const svgFace = new Vivus('avatar', {
             duration: 100,
-            type: 'delayed',
+            type: 'sync',
             animTimingFunction: Vivus.EASE
         }, afterDrawed);
+    }
+
+    private fillEyeColor() {
+        this.eyeColor = '#3c3c3d';
+        this.eyeStrokeWidth = '25';
     }
 }

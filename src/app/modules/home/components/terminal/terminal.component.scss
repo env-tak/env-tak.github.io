@@ -5,6 +5,7 @@
 
     .tak__terminal {
         width: 50%;
+        min-width: 320px;
         text-align: left;
         color: white;
         padding: 0 1rem;
@@ -20,10 +21,15 @@
 
         .shell-session {
             display: block;
-            overflow-x: auto;
             padding: 0.5em;
             background: #232323;
             color: #e6e1dc;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 15;
+            -webkit-box-orient: vertical;
+            word-wrap: break-word;
 
             .name {
                 color: #cda869;
@@ -54,7 +60,4 @@
         color: var(--accent-color);
     }
 
-    a {
-        color: inherit;
-    }
 }

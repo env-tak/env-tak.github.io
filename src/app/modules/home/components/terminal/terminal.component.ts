@@ -3,9 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 @Component({
     selector: 'prtf-terminal',
     templateUrl: './terminal.component.html',
-    styleUrls: [
-        './terminal.component.scss'
-    ]
+    styleUrls: ['./terminal.component.scss']
 })
 export class TerminalComponent implements OnInit {
 
@@ -32,7 +30,8 @@ export class TerminalComponent implements OnInit {
     }
 
     private setTypingWord() {
-        const replacedText = this.addSpanTagByKey(this.terminalText, 'tak');
+        const HIGHLIGHT_TEXT = 'tak';
+        const replacedText = this.addSpanTagByKey(this.terminalText, HIGHLIGHT_TEXT);
         this.typingWord = this.getParsedString(replacedText);
     }
 
@@ -90,13 +89,13 @@ export class TerminalComponent implements OnInit {
     }
 
     private addHyperLinkTag(text: string) {
-        const checkDomain = /(\b(https?|):\/\/.*)/g;
+        const checkDomainExp = /(\b(https?|):\/\/.*)/g;
         const parseString = (tag, ...args) => {
             const stripHtmlTags = tag.replace(/<[^>]*>/gi, '');
             return `<a href=${stripHtmlTags} target="_blank">${tag}</a>`;
         };
 
-        const innerHtmlContent = text.replace(checkDomain, parseString);
+        const innerHtmlContent = text.replace(checkDomainExp, parseString);
         return innerHtmlContent;
     }
 }
