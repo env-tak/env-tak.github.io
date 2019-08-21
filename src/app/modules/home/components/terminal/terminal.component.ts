@@ -16,8 +16,9 @@ export class TerminalComponent implements OnInit {
     private terminalText = `env | grep tak
             NAME=Hyungtak Jin
             EMAIL=env.tak@gmail.com
-            GITHUB=tak-bro
             BLOG=https://tak-bro.github.io
+            GITHUB=tak-bro
+            LINKEDIN=https://www.linkedin.com/in/hyungtak/
             KOREAN_RESUME=http://bit.ly/tak_resume_kor
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng
             `;
@@ -27,7 +28,7 @@ export class TerminalComponent implements OnInit {
 
     public ngOnInit() {
         this.setTypingWord();
-        setTimeout(() => this.typeItOut(), 1500);
+        setTimeout(() => this.typeItOut(), 2000);
     }
 
     private setTypingWord() {
@@ -36,7 +37,7 @@ export class TerminalComponent implements OnInit {
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 25;
+        const TYPING_SPEED = 20;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
             if (isDone) {

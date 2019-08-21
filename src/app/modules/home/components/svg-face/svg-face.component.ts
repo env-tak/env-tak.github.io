@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Vivus from 'vivus';
 
 @Component({
@@ -18,19 +18,19 @@ export class SvgFaceComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.svgFaceDisplay = 'block';
         this.drawSvgFace();
     }
 
     private drawSvgFace() {
-        this.svgFaceDisplay = 'block';
-        const fillEyesColor = () => {
+        const afterDrawed = () => {
             this.eyeColor = '#3c3c3d';
             this.eyeStrokeWidth = '25';
         };
         const svgFace = new Vivus('avatar', {
-            duration: 200,
+            duration: 100,
             type: 'delayed',
             animTimingFunction: Vivus.EASE
-        }, fillEyesColor);
+        }, afterDrawed);
     }
 }
