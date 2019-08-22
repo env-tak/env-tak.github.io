@@ -2,4 +2,12 @@
     position: fixed;
     top: 7%;
     right: 27%;
+    z-index: -1;
+
+    @media (max-width: 1024px) {
+        g {
+            stroke: #bbb;
+            transition: all 0.2s ease-in-out;
+        }
+    }
 }

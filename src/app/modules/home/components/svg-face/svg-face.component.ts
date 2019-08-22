@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import * as Vivus from 'vivus';
 
 @Component({
@@ -11,8 +11,11 @@ export class SvgFaceComponent implements OnInit {
     public eyeColor = '#fff';
     public eyeStrokeWidth = '1';
     public svgFaceDisplay = 'none';
+    private isDrawed = false;
+    private screenWidth: any;
 
     constructor() {
+        this.getScreenSize();
     }
 
     ngOnInit() {
@@ -32,7 +35,24 @@ export class SvgFaceComponent implements OnInit {
     }
 
     private fillEyeColor() {
-        this.eyeColor = '#3c3c3d';
+        this.isDrawed = true;
+        this.eyeColor = this.getEyeColor();
         this.eyeStrokeWidth = '25';
+    }
+
+    @HostListener('window:resize', ['$event'])
+    getScreenSize() {
+        if (!this.isDrawed) {
+            return;
+        }
+        this.screenWidth = window.innerWidth;
+        this.eyeColor = this.getEyeColor();
+    }
+
+    private getEyeColor() {
+        if (this.screenWidth <= 1024) {
+            return '#bbb';
+        }
+        return '#3c3c3c';
     }
 }
