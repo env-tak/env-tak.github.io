@@ -31,14 +31,6 @@
             -webkit-box-orient: vertical;
             word-wrap: break-word;
 
-            .name {
-                color: #cda869;
-            }
-
-            .dash {
-                color: #a5c261;
-            }
-
             .blink {
                 vertical-align: baseline;
                 background-color: #e6e1dc;
@@ -82,5 +74,14 @@
     .highlight {
         color: var(--accent-color);
     }
+
+    .name {
+        color: #cda869;
+    }
+
+    .dash {
+        color: #a5c261;
+    }
+
 
 }

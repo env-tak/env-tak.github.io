@@ -7,7 +7,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 })
 export class TerminalComponent implements OnInit {
 
-    @ViewChild('terminal') private demoTerminal: ElementRef;
+    @ViewChild('typingElement') private typingElement: ElementRef;
 
     public shouldBlink = true;
     private typingWord: string[];
@@ -39,22 +39,28 @@ export class TerminalComponent implements OnInit {
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 25;
+        const TYPING_SPEED = 20;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
             if (isDone) {
-                this.shouldBlink = true;
                 this.setHyperLinkToTerminal();
+                this.addTerminalInput();
             }
 
             if (!isDone) {
-                this.demoTerminal.nativeElement.innerHTML += this.typingWord[this.index];
+                this.typingElement.nativeElement.innerHTML += this.typingWord[this.index];
                 this.index++;
                 setTimeout(() => {
                     this.typeItOut();
                 }, TYPING_SPEED);
             }
         }, TYPING_SPEED);
+    }
+
+    private addTerminalInput() {
+        const inputElementText = `<br><br><span class="name">tak</span> <span class="dash">~ $ </span>`;
+        this.typingElement.nativeElement.innerHTML += inputElementText;
+        this.shouldBlink = true;
     }
 
     private addSpanTagByKey(text: string, key: string) {
@@ -88,8 +94,8 @@ export class TerminalComponent implements OnInit {
     }
 
     private setHyperLinkToTerminal() {
-        const text = this.addHyperLinkTag(this.demoTerminal.nativeElement.innerHTML);
-        this.demoTerminal.nativeElement.innerHTML = text;
+        const text = this.addHyperLinkTag(this.typingElement.nativeElement.innerHTML);
+        this.typingElement.nativeElement.innerHTML = text;
     }
 
     private addHyperLinkTag(text: string) {
