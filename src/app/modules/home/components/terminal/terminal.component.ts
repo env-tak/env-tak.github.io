@@ -9,6 +9,7 @@ export class TerminalComponent implements OnInit {
 
     @ViewChild('terminal') private demoTerminal: ElementRef;
 
+    public shouldBlink = true;
     private typingWord: string[];
     private index = 0;
     private terminalText = `env | grep tak
@@ -25,7 +26,10 @@ export class TerminalComponent implements OnInit {
 
     public ngOnInit() {
         this.setTypingWord();
-        setTimeout(() => this.typeItOut(), 2000);
+        setTimeout(() => {
+            this.typeItOut();
+            this.shouldBlink = false;
+        }, 2000);
     }
 
     private setTypingWord() {
@@ -35,10 +39,11 @@ export class TerminalComponent implements OnInit {
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 30;
+        const TYPING_SPEED = 25;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
             if (isDone) {
+                this.shouldBlink = true;
                 this.setHyperLinkToTerminal();
             }
 
