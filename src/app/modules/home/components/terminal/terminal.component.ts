@@ -1,63 +1,66 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-
-import * as Vivus from 'vivus';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
     selector: 'prtf-terminal',
     templateUrl: './terminal.component.html',
-    styleUrls: [
-        './terminal.component.scss'
-    ]
+    styleUrls: ['./terminal.component.scss']
 })
 export class TerminalComponent implements OnInit {
 
-    @ViewChild('terminal') private demoTerminal: ElementRef;
+    @ViewChild('typingElement') private typingElement: ElementRef;
 
-    public eyeColor = '#fff';
-    public eyeStrokeWidth = '1';
-    public svgFaceDisplay = 'none';
-
+    public shouldBlink = true;
     private typingWord: string[];
     private index = 0;
     private terminalText = `env | grep tak
             NAME=Hyungtak Jin
             EMAIL=env.tak@gmail.com
-            GITHUB=tak-bro
             BLOG=https://tak-bro.github.io
+            GITHUB=tak-bro
+            LINKEDIN=https://www.linkedin.com/in/hyungtak/
             KOREAN_RESUME=http://bit.ly/tak_resume_kor
-            ENGLISH_RESUME=http://bit.ly/tak_resume_eng
-            `;
+            ENGLISH_RESUME=http://bit.ly/tak_resume_eng`;
 
     constructor() {
     }
 
     public ngOnInit() {
         this.setTypingWord();
-        setTimeout(() => this.typeItOut(), 10);
+        setTimeout(() => {
+            this.typeItOut();
+            this.shouldBlink = false;
+        }, 2000);
     }
 
     private setTypingWord() {
-        const replacedText = this.addSpanTagByKey(this.terminalText, 'tak');
+        const HIGHLIGHT_TEXT = 'tak';
+        const replacedText = this.addSpanTagByKey(this.terminalText, HIGHLIGHT_TEXT);
         this.typingWord = this.getParsedString(replacedText);
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 1;
+        const TYPING_SPEED = 20;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
             if (isDone) {
                 this.setHyperLinkToTerminal();
-                this.drawSvgFace();
+                this.addTerminalInput();
             }
 
             if (!isDone) {
-                this.demoTerminal.nativeElement.innerHTML += this.typingWord[this.index];
+                this.typingElement.nativeElement.innerHTML += this.typingWord[this.index];
                 this.index++;
                 setTimeout(() => {
                     this.typeItOut();
                 }, TYPING_SPEED);
             }
         }, TYPING_SPEED);
+    }
+
+    private addTerminalInput() {
+        const inputElementText = `<br><br><span class="name">tak</span> <span class="dash">~ $ </span>`;
+        this.typingElement.nativeElement.innerHTML += inputElementText;
+        this.shouldBlink = true;
     }
 
     private addSpanTagByKey(text: string, key: string) {
@@ -91,31 +94,18 @@ export class TerminalComponent implements OnInit {
     }
 
     private setHyperLinkToTerminal() {
-        const text = this.addHyperLinkTag(this.demoTerminal.nativeElement.innerHTML);
-        this.demoTerminal.nativeElement.innerHTML = text;
+        const text = this.addHyperLinkTag(this.typingElement.nativeElement.innerHTML);
+        this.typingElement.nativeElement.innerHTML = text;
     }
 
     private addHyperLinkTag(text: string) {
-        const checkDomain = /(\b(https?|):\/\/.*)/g;
+        const checkDomainExp = /(\b(https?|):\/\/.*)/g;
         const parseString = (tag, ...args) => {
             const stripHtmlTags = tag.replace(/<[^>]*>/gi, '');
             return `<a href=${stripHtmlTags} target="_blank">${tag}</a>`;
         };
 
-        const innerHtmlContent = text.replace(checkDomain, parseString);
+        const innerHtmlContent = text.replace(checkDomainExp, parseString);
         return innerHtmlContent;
-    }
-
-    private drawSvgFace() {
-        this.svgFaceDisplay = 'block';
-        const fillEyesColor = () => {
-            this.eyeColor = '#3c3c3d';
-            this.eyeStrokeWidth = '25';
-        };
-        const svgFace = new Vivus('avatar', {
-            duration: 200,
-            type: 'delayed',
-            animTimingFunction: Vivus.EASE
-        }, fillEyesColor);
     }
 }
