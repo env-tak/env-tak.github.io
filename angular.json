@@ -28,9 +28,7 @@
                         ],
                         "styles": [
                             "src/assets/scss/styles.scss",
-                            "src/assets/scss/aurora-pack.css",
                             "src/assets/scss/aurora-theme-base.css",
-                            "src/assets/scss/urku.css"
                         ],
                         "scripts": [
                             "./node_modules/vivus/dist/vivus.js"
@@ -90,9 +88,7 @@
                         "karmaConfig": "src/karma.conf.js",
                         "styles": [
                             "src/assets/scss/styles.scss",
-                            "src/assets/scss/aurora-pack.css",
                             "src/assets/scss/aurora-theme-base.css",
-                            "src/assets/scss/urku.css"
                         ],
                         "scripts": [
                         ],
