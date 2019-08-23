@@ -62,3 +62,41 @@ blockquote footer {
   font-family: "Aileron", Helvetica, Arial, sans-serif;
 }
 
+input[type="text"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+textarea {
+  background: #f6f6f6;
+  border: 0;
+  font-size: inherit;
+  letter-spacing: .04em;
+  margin-bottom: .5rem;
+  padding: 2.2rem 3rem;
+}
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="email"]:focus,
+input[type="month"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="time"]:focus,
+input[type="url"]:focus,
+input[type="week"]:focus,
+textarea:focus {
+  outline: 0;
+}
+
