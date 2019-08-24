@@ -42,10 +42,10 @@ export class SvgFaceComponent implements OnInit {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize() {
+        this.screenWidth = window.innerWidth;
         if (!this.isDrawed) {
             return;
         }
-        this.screenWidth = window.innerWidth;
         this.eyeColor = this.getEyeColor();
     }
 
