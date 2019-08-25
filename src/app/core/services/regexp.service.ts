@@ -32,11 +32,15 @@ export class RegExpService {
         return text.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
     }
 
-    splitStringThatContainsTag(text: string) {
-        return text.split(/(\<[^>]*>+[^<]+\<\/+[a-zA-Z0-9]+\>)/gi);
+    splitStringWithTag(text: string) {
+        return text.split(/(\<+[a-zA-Z0-9\=\"\s]+\>+[^<]+\<\/+[a-zA-Z0-9]+\>)/gi);
     }
 
     splitStringByTag(text: string) {
         return text.split(/(<.+?>)(.+?)(<\/.+?>)/g);
+    }
+
+    checkIsDomain() {
+        return /(\b(https?|):\/\/.*)/g;
     }
 }

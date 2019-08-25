@@ -23,7 +23,6 @@ describe('RegExpService', () => {
         expect(deletedStr).toEqual(expectedStr);
     });
 
-
     it('should add a tag when text starting with http://, https://, ftp://', () => {
         const testStr = 'https://test.url';
         const expectedStr = `<a href="${testStr}" target="_blank">${testStr}</a>`;
@@ -51,7 +50,7 @@ describe('RegExpService', () => {
     it('should split strings that contains tag', () => {
         const testStr = 'This is <strong>test</strong> <a href="test">string</a>.';
         const expected = ['This is ', '<strong>test</strong>', ' ', '<a href="test">string</a>', '.'];
-        const replacedStr = service.splitStringThatContainsTag(testStr);
+        const replacedStr = service.splitStringWithTag(testStr);
 
         expect(expected).toEqual(replacedStr);
     });
@@ -63,4 +62,19 @@ describe('RegExpService', () => {
 
         expect(expected).toEqual(replacedStr);
     });
+
+    it('should check domain string', () => {
+        const testStr = 'https://www.naver.com';
+        const result = service.checkIsDomain().test(testStr);
+        expect(result).toBeTruthy();
+
+        const testStr2 = 'http://www.naver.com';
+        const result2 = service.checkIsDomain().test(testStr2);
+        expect(result2).toBeTruthy();
+
+        const testStr3 = 'www.naver.com';
+        const result3 = service.checkIsDomain().test(testStr3);
+        expect(result3).toBeFalsy();
+    });
+
 });

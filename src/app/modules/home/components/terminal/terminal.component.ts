@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { RegExpService } from '../../../../core/services/regexp.service';
 
 @Component({
     selector: 'prtf-terminal',
@@ -21,15 +22,17 @@ export class TerminalComponent implements OnInit {
             KOREAN_RESUME=http://bit.ly/tak_resume_kor
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng`;
 
-    constructor() {
+    constructor(private regExpService: RegExpService) {
     }
 
     public ngOnInit() {
         this.setTypingWord();
+
+        const SVG_FACE_DRAWING_DELAY  = 2000;
         setTimeout(() => {
-            this.typeItOut();
             this.shouldBlink = false;
-        }, 2000);
+            this.typeItOut();
+        }, SVG_FACE_DRAWING_DELAY);
     }
 
     private setTypingWord() {
@@ -80,7 +83,7 @@ export class TerminalComponent implements OnInit {
     }
 
     private getParsedString(text: string) {
-        const fragments = text.split(/(\<+[a-zA-Z0-9\=\"\s]+\>+[^<]+\<\/+[a-zA-Z0-9]+\>)/gi);
+        const fragments = this.regExpService.splitStringWithTag(text);
         const typingWord = [];
         fragments.map((word) => {
             const hasSpanTag = word.includes('<span');
@@ -99,13 +102,12 @@ export class TerminalComponent implements OnInit {
     }
 
     private addHyperLinkTag(text: string) {
-        const checkDomainExp = /(\b(https?|):\/\/.*)/g;
         const parseString = (tag, ...args) => {
             const stripHtmlTags = tag.replace(/<[^>]*>/gi, '');
             return `<a href=${stripHtmlTags} target="_blank">${tag}</a>`;
         };
 
-        const innerHtmlContent = text.replace(checkDomainExp, parseString);
+        const innerHtmlContent = text.replace(this.regExpService.checkIsDomain(), parseString);
         return innerHtmlContent;
     }
 }
