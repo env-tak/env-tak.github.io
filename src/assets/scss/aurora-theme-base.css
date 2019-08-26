@@ -53,12 +53,3 @@ button:not(.au-underline) {
   text-decoration: none;
 }
 
-blockquote {
-  border-left: 0;
-  font-family: Georgia, "Times New Roman", Times, serif;
-  padding-left: 0;
-}
-blockquote footer {
-  font-family: "Aileron", Helvetica, Arial, sans-serif;
-}
-
