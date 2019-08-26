@@ -11,7 +11,7 @@ export class SvgFaceComponent implements OnInit {
     public eyeColor = '#fff';
     public eyeStrokeWidth = '1';
     public svgFaceDisplay = 'none';
-    private isDrawed = false;
+    private isDrawn = false;
     private screenWidth: any;
 
     constructor() {
@@ -24,18 +24,18 @@ export class SvgFaceComponent implements OnInit {
     }
 
     private drawSvgFace() {
-        const afterDrawed = () => {
+        const afterDrawn = () => {
             this.fillEyeColor();
         };
         const svgFace = new Vivus('avatar', {
             duration: 100,
             type: 'sync',
             animTimingFunction: Vivus.EASE
-        }, afterDrawed);
+        }, afterDrawn);
     }
 
     private fillEyeColor() {
-        this.isDrawed = true;
+        this.isDrawn = true;
         this.eyeColor = this.getEyeColor();
         this.eyeStrokeWidth = '25';
     }
@@ -43,7 +43,7 @@ export class SvgFaceComponent implements OnInit {
     @HostListener('window:resize', ['$event'])
     getScreenSize() {
         this.screenWidth = window.innerWidth;
-        if (!this.isDrawed) {
+        if (!this.isDrawn) {
             return;
         }
         this.eyeColor = this.getEyeColor();
