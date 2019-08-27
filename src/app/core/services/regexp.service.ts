@@ -43,4 +43,8 @@ export class RegExpService {
     checkIsDomain() {
         return /(\b(https?|):\/\/.*)/g;
     }
+
+    checkIsEmail() {
+        return /(\b(env.*)@.*)/g;
+    }
 }
