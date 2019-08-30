@@ -28,7 +28,7 @@ export class TerminalComponent implements OnInit {
     public ngOnInit() {
         this.setTypingWord();
 
-        const SVG_FACE_DRAWING_DELAY  = 1000;
+        const SVG_FACE_DRAWING_DELAY  = 2000;
         setTimeout(() => {
             this.shouldBlink = false;
             this.typeItOut();
@@ -42,7 +42,7 @@ export class TerminalComponent implements OnInit {
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 2;
+        const TYPING_SPEED = 20;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
             if (isDone) {
