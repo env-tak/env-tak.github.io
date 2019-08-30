@@ -97,17 +97,28 @@ export class TerminalComponent implements OnInit {
     }
 
     private setHyperLinkToTerminal() {
-        const text = this.addHyperLinkTag(this.typingElement.nativeElement.innerHTML);
+        let text = this.addHyperLinkTag(this.typingElement.nativeElement.innerHTML);
+        text = this.addEmailLinkTag(text);
         this.typingElement.nativeElement.innerHTML = text;
     }
 
     private addHyperLinkTag(text: string) {
-        const parseString = (tag, ...args) => {
+        const parseHyperLink = (tag, ...args) => {
             const stripHtmlTags = tag.replace(/<[^>]*>/gi, '');
-            return `<a href=${stripHtmlTags} target="_blank">${tag}</a>`;
+            return `<a href="${stripHtmlTags}" target="_blank">${tag}</a>`;
         };
 
-        const innerHtmlContent = text.replace(this.regExpService.checkIsDomain(), parseString);
+        const innerHtmlContent = text.replace(this.regExpService.checkIsDomain(), parseHyperLink);
+        return innerHtmlContent;
+    }
+
+    private addEmailLinkTag(text: string) {
+        const parseEmailLink = (tag, ...args) => {
+            const stripHtmlTags = tag.replace(/<[^>]*>/gi, '');
+            return `<a href="mailto:${stripHtmlTags}">${tag}</a>`;
+        };
+
+        const innerHtmlContent = text.replace(this.regExpService.checkIsEmail(), parseEmailLink);
         return innerHtmlContent;
     }
 }
