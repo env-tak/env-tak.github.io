@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Output, EventEmitter } from '@angular/core';
 import * as Vivus from 'vivus';
+
+import { CheckAnimationService } from '../../../../core/services/check-animation/check-animation.service';
 
 @Component({
     selector: 'prtf-svg-face',
@@ -9,15 +10,15 @@ import * as Vivus from 'vivus';
 })
 export class SvgFaceComponent implements OnInit {
 
-    @Output() isDrawnChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     public eyeColor = '#fff';
     public eyeStrokeWidth = '1';
     public svgFaceDisplay = 'none';
     private isDrawn = false;
     private screenWidth: any;
 
-    constructor() {
+    constructor(private checkAnimationService: CheckAnimationService) {
         this.getScreenSize();
+        this.checkAnimationService.setIsSvgFaceDrawn(this.isDrawn);
     }
 
     ngOnInit() {
@@ -37,9 +38,7 @@ export class SvgFaceComponent implements OnInit {
     private drawSvgFace() {
         const afterDrawn = () => {
             this.fillEyeColor();
-
-            this.isDrawn = true;
-            this.isDrawnChange.emit(this.isDrawn);
+            this.doneSvgDrawn();
         };
         const svgFace = new Vivus('avatar', {
             duration: 100,
@@ -58,5 +57,10 @@ export class SvgFaceComponent implements OnInit {
             return '#bbb';
         }
         return '#3c3c3c';
+    }
+
+    private doneSvgDrawn() {
+        this.isDrawn = true;
+        this.checkAnimationService.setIsSvgFaceDrawn(this.isDrawn);
     }
 }

@@ -1,16 +1,24 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { RegExpService } from '../../../../core/services/regexp.service';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
+import {delay, filter, takeUntil} from 'rxjs/operators';
+
+import { RegExpService } from '../../../../core/services/regexp/regexp.service';
+import { CheckAnimationService } from '../../../../core/services/check-animation/check-animation.service';
 
 @Component({
     selector: 'prtf-terminal',
     templateUrl: './terminal.component.html',
     styleUrls: ['./terminal.component.scss']
 })
-export class TerminalComponent implements OnInit {
+export class TerminalComponent implements OnInit, OnDestroy {
+
+    private static TYPING_SPEED = 20;
+    private static HIGHLIGHT_TEXT = 'tak';
 
     @ViewChild('typingElement') private typingElement: ElementRef;
 
     public shouldBlink = true;
+    private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
     private typingWord: string[];
     private index = 0;
     private terminalText = `env | grep tak
@@ -22,27 +30,36 @@ export class TerminalComponent implements OnInit {
             KOREAN_RESUME=http://bit.ly/tak_resume_kor
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng`;
 
-    constructor(private regExpService: RegExpService) {
+    constructor(private regExpService: RegExpService,
+                private checkAnimationService: CheckAnimationService) {
     }
 
-    public ngOnInit() {
+    ngOnInit() {
         this.setTypingWord();
 
-        const SVG_FACE_DRAWING_DELAY  = 2000;
-        setTimeout(() => {
+        const finishSvgFaceDrawn$ = this.checkAnimationService.getIsSvgFaceDrawn().pipe(
+            filter(isDrawn => isDrawn),
+            delay(500),
+            takeUntil(this.destroyed$)
+        );
+
+        finishSvgFaceDrawn$.subscribe(() => {
             this.shouldBlink = false;
             this.typeItOut();
-        }, SVG_FACE_DRAWING_DELAY);
+        });
+    }
+
+    ngOnDestroy() {
+        this.destroyed$.next(true);
+        this.destroyed$.complete();
     }
 
     private setTypingWord() {
-        const HIGHLIGHT_TEXT = 'tak';
-        const replacedText = this.addSpanTagByKey(this.terminalText, HIGHLIGHT_TEXT);
+        const replacedText = this.addSpanTagByKey(this.terminalText, TerminalComponent.HIGHLIGHT_TEXT);
         this.typingWord = this.getParsedString(replacedText);
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 20;
         setTimeout(() => {
             const isDone = this.index >= this.typingWord.length;
             if (isDone) {
@@ -55,9 +72,9 @@ export class TerminalComponent implements OnInit {
                 this.index++;
                 setTimeout(() => {
                     this.typeItOut();
-                }, TYPING_SPEED);
+                }, TerminalComponent.TYPING_SPEED);
             }
-        }, TYPING_SPEED);
+        }, TerminalComponent.TYPING_SPEED);
     }
 
     private addTerminalInput() {

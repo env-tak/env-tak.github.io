@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EnsureModuleLoadedOnceGuard } from './guards/ensure-module-loaded-once.guard';
 
-import { RegExpService } from './services/regexp.service';
+import { RegExpService } from './services/regexp/regexp.service';
+import { CheckAnimationService } from './services/check-animation/check-animation.service';
 
 @NgModule({
     imports: [
@@ -10,6 +11,7 @@ import { RegExpService } from './services/regexp.service';
     ],
     providers: [
         RegExpService,
+        CheckAnimationService,
     ]
 })
 export class CoreModule implements EnsureModuleLoadedOnceGuard { }
