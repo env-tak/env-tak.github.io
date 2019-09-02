@@ -8,5 +8,14 @@ import { Component } from '@angular/core';
     ]
 })
 export class HomeComponent {
+
+    public checkSvgFaceDrawn(isDrawn: boolean) {
+        // TODO: start terminal after isDrawn
+        if (isDrawn) {
+
+        } else {
+
+        }
+    }
 }
 

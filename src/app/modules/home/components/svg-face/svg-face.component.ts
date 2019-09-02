@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
 import * as Vivus from 'vivus';
 
 @Component({
@@ -8,6 +9,7 @@ import * as Vivus from 'vivus';
 })
 export class SvgFaceComponent implements OnInit {
 
+    @Output() isDrawnChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     public eyeColor = '#fff';
     public eyeStrokeWidth = '1';
     public svgFaceDisplay = 'none';
@@ -23,9 +25,21 @@ export class SvgFaceComponent implements OnInit {
         this.drawSvgFace();
     }
 
+    @HostListener('window:resize', ['$event'])
+    getScreenSize() {
+        this.screenWidth = window.innerWidth;
+        if (!this.isDrawn) {
+            return;
+        }
+        this.eyeColor = this.getEyeColor();
+    }
+
     private drawSvgFace() {
         const afterDrawn = () => {
             this.fillEyeColor();
+
+            this.isDrawn = true;
+            this.isDrawnChange.emit(this.isDrawn);
         };
         const svgFace = new Vivus('avatar', {
             duration: 100,
@@ -35,18 +49,8 @@ export class SvgFaceComponent implements OnInit {
     }
 
     private fillEyeColor() {
-        this.isDrawn = true;
         this.eyeColor = this.getEyeColor();
         this.eyeStrokeWidth = '25';
-    }
-
-    @HostListener('window:resize', ['$event'])
-    getScreenSize() {
-        this.screenWidth = window.innerWidth;
-        if (!this.isDrawn) {
-            return;
-        }
-        this.eyeColor = this.getEyeColor();
     }
 
     private getEyeColor() {
