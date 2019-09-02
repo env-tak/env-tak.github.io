@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import {delay, filter, takeUntil} from 'rxjs/operators';
+import { delay, filter, takeUntil } from 'rxjs/operators';
 
 import { RegExpService } from '../../../../core/services/regexp/regexp.service';
 import { CheckAnimationService } from '../../../../core/services/check-animation/check-animation.service';
