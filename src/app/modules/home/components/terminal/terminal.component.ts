@@ -1,16 +1,24 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { RegExpService } from '../../../../core/services/regexp.service';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
+import { delay, filter, takeUntil } from 'rxjs/operators';
+
+import { RegExpService } from '../../../../core/services/regexp/regexp.service';
+import { CheckAnimationService } from '../../../../core/services/check-animation/check-animation.service';
 
 @Component({
     selector: 'prtf-terminal',
     templateUrl: './terminal.component.html',
     styleUrls: ['./terminal.component.scss']
 })
-export class TerminalComponent implements OnInit {
+export class TerminalComponent implements OnInit, OnDestroy {
+
+    private static TYPING_SPEED = 40;
+    private static HIGHLIGHT_TEXT = 'tak';
 
     @ViewChild('typingElement') private typingElement: ElementRef;
 
     public shouldBlink = true;
+    private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
     private typingWord: string[];
     private index = 0;
     private terminalText = `env | grep tak
@@ -22,42 +30,49 @@ export class TerminalComponent implements OnInit {
             KOREAN_RESUME=http://bit.ly/tak_resume_kor
             ENGLISH_RESUME=http://bit.ly/tak_resume_eng`;
 
-    constructor(private regExpService: RegExpService) {
+    constructor(private regExpService: RegExpService,
+                private checkAnimationService: CheckAnimationService) {
     }
 
-    public ngOnInit() {
-        this.setTypingWord();
+    ngOnInit() {
 
-        const SVG_FACE_DRAWING_DELAY  = 2000;
-        setTimeout(() => {
-            this.shouldBlink = false;
+        const finishSvgFaceDrawn$ = this.checkAnimationService.getIsSvgFaceDrawn().pipe(
+            filter(isDrawn => isDrawn),
+            delay(500),
+            takeUntil(this.destroyed$)
+        );
+
+        finishSvgFaceDrawn$.subscribe(() => {
+            this.setTypingWord();
             this.typeItOut();
-        }, SVG_FACE_DRAWING_DELAY);
+            this.shouldBlink = false;
+        });
+    }
+
+    ngOnDestroy() {
+        this.destroyed$.next(true);
+        this.destroyed$.complete();
     }
 
     private setTypingWord() {
-        const HIGHLIGHT_TEXT = 'tak';
-        const replacedText = this.addSpanTagByKey(this.terminalText, HIGHLIGHT_TEXT);
+        const replacedText = this.addSpanTagByKey(this.terminalText, TerminalComponent.HIGHLIGHT_TEXT);
         this.typingWord = this.getParsedString(replacedText);
     }
 
     private typeItOut() {
-        const TYPING_SPEED = 20;
-        setTimeout(() => {
-            const isDone = this.index >= this.typingWord.length;
-            if (isDone) {
-                this.setHyperLinkToTerminal();
-                this.addTerminalInput();
-            }
+        const isDone = this.index >= this.typingWord.length;
+        if (isDone) {
+            this.setHyperLinkToTerminal();
+            this.addTerminalInput();
+            return;
+        }
 
-            if (!isDone) {
-                this.typingElement.nativeElement.innerHTML += this.typingWord[this.index];
-                this.index++;
-                setTimeout(() => {
-                    this.typeItOut();
-                }, TYPING_SPEED);
-            }
-        }, TYPING_SPEED);
+        // typing word...
+        this.typingElement.nativeElement.innerHTML += this.typingWord[this.index];
+        this.index++;
+        setTimeout(() => {
+            this.typeItOut();
+        }, TerminalComponent.TYPING_SPEED);
     }
 
     private addTerminalInput() {
@@ -75,9 +90,7 @@ export class TerminalComponent implements OnInit {
             return text;
         }
 
-        const spanTagStrings = matchedArray.map(arr => {
-            return arr.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
-        });
+        const spanTagStrings = matchedArray.map(arr => arr.split('').map(letter => `<span class="highlight">${letter}</span>`).join(''));
         const replacedText = replaceAll(text, new RegExp(key, 'gi'), spanTagStrings.shift());
         return replacedText;
     }
@@ -93,6 +106,7 @@ export class TerminalComponent implements OnInit {
                 word.split('').map(tmp => typingWord.push(tmp));
             }
         });
+
         return typingWord;
     }
 
