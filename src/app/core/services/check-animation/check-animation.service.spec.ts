@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CheckAnimationService } from './check-animation.service';
-import {filter} from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 describe('CheckAnimationService', () => {
 

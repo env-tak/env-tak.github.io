@@ -12,7 +12,7 @@ import { CheckAnimationService } from '../../../../core/services/check-animation
 })
 export class TerminalComponent implements OnInit, OnDestroy {
 
-    private static TYPING_SPEED = 20;
+    private static TYPING_SPEED = 40;
     private static HIGHLIGHT_TEXT = 'tak';
 
     @ViewChild('typingElement') private typingElement: ElementRef;
@@ -35,7 +35,6 @@ export class TerminalComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.setTypingWord();
 
         const finishSvgFaceDrawn$ = this.checkAnimationService.getIsSvgFaceDrawn().pipe(
             filter(isDrawn => isDrawn),
@@ -44,8 +43,9 @@ export class TerminalComponent implements OnInit, OnDestroy {
         );
 
         finishSvgFaceDrawn$.subscribe(() => {
-            this.shouldBlink = false;
+            this.setTypingWord();
             this.typeItOut();
+            this.shouldBlink = false;
         });
     }
 
@@ -60,20 +60,18 @@ export class TerminalComponent implements OnInit, OnDestroy {
     }
 
     private typeItOut() {
-        setTimeout(() => {
-            const isDone = this.index >= this.typingWord.length;
-            if (isDone) {
-                this.setHyperLinkToTerminal();
-                this.addTerminalInput();
-            }
+        const isDone = this.index >= this.typingWord.length;
+        if (isDone) {
+            this.setHyperLinkToTerminal();
+            this.addTerminalInput();
+            return;
+        }
 
-            if (!isDone) {
-                this.typingElement.nativeElement.innerHTML += this.typingWord[this.index];
-                this.index++;
-                setTimeout(() => {
-                    this.typeItOut();
-                }, TerminalComponent.TYPING_SPEED);
-            }
+        // typing word...
+        this.typingElement.nativeElement.innerHTML += this.typingWord[this.index];
+        this.index++;
+        setTimeout(() => {
+            this.typeItOut();
         }, TerminalComponent.TYPING_SPEED);
     }
 
@@ -92,9 +90,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
             return text;
         }
 
-        const spanTagStrings = matchedArray.map(arr => {
-            return arr.split('').map(letter => `<span class="highlight">${letter}</span>`).join('');
-        });
+        const spanTagStrings = matchedArray.map(arr => arr.split('').map(letter => `<span class="highlight">${letter}</span>`).join(''));
         const replacedText = replaceAll(text, new RegExp(key, 'gi'), spanTagStrings.shift());
         return replacedText;
     }
@@ -110,6 +106,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
                 word.split('').map(tmp => typingWord.push(tmp));
             }
         });
+
         return typingWord;
     }
 
