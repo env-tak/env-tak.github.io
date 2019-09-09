@@ -30,9 +30,10 @@ npm run test
 
 ## Author
 
-👤 **tak-bro**
+👤 **Hyungtak Jin**
 
 * Github: [@tak-bro](https://github.com/tak-bro)
+* LinkedIn: [@hyungtak](https://www.linkedin.com/in/hyungtak/)
 
 ## 🤝 Contributing
 
