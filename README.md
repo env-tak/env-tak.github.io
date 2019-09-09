@@ -1,27 +1,51 @@
-# Portfolio
+<h1 align="center">Welcome to env-tak 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-0.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/env-tak/env-tak.github.io/blob/develop/LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
+  </a>
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
+> my profile site made by Angular7
 
-## Development server
+### 🏠 [Homepage](https://env-tak.github.io/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Install
 
-## Code scaffolding
+```sh
+npm install
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Usage
 
-## Build
+```sh
+npm run start
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Run tests
 
-## Running unit tests
+```sh
+npm run test
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Author
 
-## Running end-to-end tests
+👤 **tak-bro**
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+* Github: [@tak-bro](https://github.com/tak-bro)
 
-## Further help
+## 🤝 Contributing
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/env-tak/env-tak.github.io/issues).
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+## 📝 License
+
+Copyright © 2019 [tak-bro](https://github.com/tak-bro).<br />
+This project is [MIT](https://github.com/env-tak/env-tak.github.io/blob/develop/LICENSE) licensed.
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
