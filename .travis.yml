@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "8"
+dist: trusty
+sudo: required
+branches:
+  only:
+  - master
+before_script:
+  - npm install -g @angular/cli
+script:
+  - npm run lint
+  - npm run test-headless
+  - npm run predeploy
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist
+  on:
+    branch: master
