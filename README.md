@@ -4,6 +4,9 @@
   <a href="https://github.com/env-tak/env-tak.github.io/blob/develop/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
   </a>
+  <a href="https://travis-ci.org/env-tak/env-tak.github.io">
+    <img alt="Travis-CI" src="https://travis-ci.org/env-tak/env-tak.github.io.svg?branch=develop" target="_blank" />
+  </a>
 </p>
 
 > my profile site made by Angular7
