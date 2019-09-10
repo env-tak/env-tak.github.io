@@ -7,6 +7,8 @@ branches:
   only:
   - develop
 before_script:
+  - git config --global user.name tak-bro
+  - git config --global user.email env.tak@gmail.com
   - npm install -g @angular/cli
 script:
   - npm run lint
@@ -17,5 +19,6 @@ deploy:
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   local_dir: dist
+  keep_history: true
   on:
     branch: master
