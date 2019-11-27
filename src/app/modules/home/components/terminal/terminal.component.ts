@@ -27,8 +27,8 @@ export class TerminalComponent implements OnInit, OnDestroy {
             BLOG=https://tak-bro.github.io
             GITHUB=tak-bro
             LINKEDIN=https://www.linkedin.com/in/hyungtak/
-            KOREAN_RESUME=http://bit.ly/tak_resume_kor_191125
-            ENGLISH_RESUME=http://bit.ly/tak_resume_eng`;
+            KOREAN_RESUME=https://tak-bro.github.io/assets/resume_kor.pdf
+            ENGLISH_RESUME=https://tak-bro.github.io/assets/resume_eng.pdf`;
 
     constructor(private regExpService: RegExpService,
                 private checkAnimationService: CheckAnimationService) {
