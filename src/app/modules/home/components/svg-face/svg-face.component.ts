@@ -41,7 +41,7 @@ export class SvgFaceComponent implements OnInit {
             this.doneSvgDrawn();
         };
         const svgFace = new Vivus('avatar', {
-            duration: 100,
+            duration: 75,
             type: 'sync',
             animTimingFunction: Vivus.EASE
         }, afterDrawn);

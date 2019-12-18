@@ -12,7 +12,7 @@ import { CheckAnimationService } from '../../../../core/services/check-animation
 })
 export class TerminalComponent implements OnInit, OnDestroy {
 
-    private static TYPING_SPEED = 40;
+    private static TYPING_SPEED = 35;
     private static HIGHLIGHT_TEXT = 'tak';
 
     @ViewChild('typingElement') private typingElement: ElementRef;
@@ -35,7 +35,6 @@ export class TerminalComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
         const finishSvgFaceDrawn$ = this.checkAnimationService.getIsSvgFaceDrawn().pipe(
             filter(isDrawn => isDrawn),
             delay(500),
