@@ -13,6 +13,7 @@ import { CheckAnimationService } from '../../../../core/services/check-animation
 export class TerminalComponent implements OnInit, OnDestroy {
 
     private static TYPING_SPEED = 35;
+    private static TYPING_DELAY = 500;
     private static HIGHLIGHT_TEXT = 'tak';
 
     @ViewChild('typingElement') private typingElement: ElementRef;
@@ -26,9 +27,8 @@ export class TerminalComponent implements OnInit, OnDestroy {
             EMAIL=env.tak@gmail.com
             BLOG=https://tak-bro.github.io
             GITHUB=tak-bro
-            LINKEDIN=https://www.linkedin.com/in/hyungtak/
-            KOREAN_RESUME=https://tak-bro.github.io/assets/resume_kor.pdf
-            ENGLISH_RESUME=https://tak-bro.github.io/assets/resume_eng.pdf`;
+            LINKED_IN=https://www.linkedin.com/in/hyungtak/
+            RESUME=https://tak-bro.github.io/assets/resume.pdf`;
 
     constructor(private regExpService: RegExpService,
                 private checkAnimationService: CheckAnimationService) {
@@ -37,7 +37,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const finishSvgFaceDrawn$ = this.checkAnimationService.getIsSvgFaceDrawn().pipe(
             filter(isDrawn => isDrawn),
-            delay(500),
+            delay(TerminalComponent.TYPING_DELAY),
             takeUntil(this.destroyed$)
         );
 
