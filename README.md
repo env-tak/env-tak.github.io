@@ -31,6 +31,16 @@ npm run start
 npm run test
 ```
 
+## index.html에서 실행
+```sh
+$ ng build --prod
+$ cd dist/
+$ mkdir static
+$ mv *.js ./static
+# index.html에서 경로 수정
+# main.js 에서 경로 못찾는 파일 찾아서 static/ 추가해주기
+```
+
 ## Author
 
 👤 **Hyungtak Jin**
