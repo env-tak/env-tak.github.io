@@ -28,7 +28,7 @@
                         ],
                         "styles": [
                             "src/assets/scss/styles.scss",
-                            "src/assets/scss/aurora-theme-base.css",
+                            "src/assets/scss/aurora-theme-base.css"
                         ],
                         "scripts": [
                             "./node_modules/vivus/dist/vivus.js"
