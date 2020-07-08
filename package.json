@@ -5,6 +5,7 @@
         "ng": "ng",
         "start": "ng serve --port 5000",
         "build": "ng build",
+        "build:local": "ng build --configuration local",
         "test": "ng test",
         "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
         "lint": "ng lint",
