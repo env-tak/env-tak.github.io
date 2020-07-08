@@ -1,65 +1,64 @@
-<h1 align="center">Welcome to env-tak 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.0.0-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/env-tak/env-tak.github.io/blob/develop/LICENSE">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
+<h1 align="center">My Profile Site</h1>
+
+<p align="center">
+  <a aria-label="last commit" href="https://github.com/env-tak/env-tak.github.io/commits/develop">
+    <img alt="" src="https://img.shields.io/github/last-commit/env-tak/env-tak.github.io.svg">
   </a>
-  <a href="https://travis-ci.org/env-tak/env-tak.github.io">
-    <img alt="Travis-CI" src="https://travis-ci.org/env-tak/env-tak.github.io.svg?branch=develop" target="_blank" />
+  <a aria-label="license" href="https://github.com/env-tak/env-tak.github.io/blob/develop/LICENSE">
+    <img src="https://img.shields.io/github/license/env-tak/env-tak.github.io.svg" alt="">
   </a>
 </p>
 
-> my profile site made by Angular7
+> My profile site made by Angular7
 
-### 🏠 [Homepage](https://env-tak.github.io/)
-
-## Install
-
-```sh
-npm install
-```
+[![Demo](https://github.com/env-tak/env-tak.github.io/raw/develop/static/demo.png)](https://env-tak.github.io/)
 
 ## Usage
 
-```sh
-npm run start
+### Installation
+
+```bash
+$ git clone git@github.com:env-tak/env-tak.github.io.git
+$ cd env-tak.github.io
+
+$ npm install
+```
+
+## Running the app
+
+```bash
+$ npm start
 ```
 
 ## Run tests
 
-```sh
-npm run test
+```bash
+$ npm run test
 ```
 
-## index.html에서 실행
-```sh
-$ ng build --prod
+## Run production file locally
+```bash
+$ npm run build:local
 $ cd dist/
-$ mkdir static
-$ mv *.js ./static
-# index.html에서 경로 수정
-# main.js 에서 경로 못찾는 파일 찾아서 static/ 추가해주기
+# run index.html on browser
 ```
 
-## Author
+## Troubleshooting
+
+Please follow this guidelines when reporting bugs and feature requests:
+
+1. Use [GitHub Issues](https://github.com/env-tak/env-tak.github.io/issues) board to report bugs and feature requests (not our email address)
+2. Please **always** write steps to reproduce the error. That way we can focus on fixing the bug, not scratching our heads trying to reproduce it.
+
+Thanks for understanding!
+
+## Stay in touch
 
 👤 **Hyungtak Jin**
 
 * Github: [@tak-bro](https://github.com/tak-bro)
 * LinkedIn: [@hyungtak](https://www.linkedin.com/in/hyungtak/)
 
-## 🤝 Contributing
+### License
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/env-tak/env-tak.github.io/issues).
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
-## 📝 License
-
-Copyright © 2019 [tak-bro](https://github.com/tak-bro).<br />
-This project is [MIT](https://github.com/env-tak/env-tak.github.io/blob/develop/LICENSE) licensed.
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+The MIT License (see the [LICENSE](https://github.com/env-tak/env-tak.github.io/blob/develop/LICENSE) file for the full text)

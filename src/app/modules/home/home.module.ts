@@ -6,7 +6,7 @@ import { HomeRoutingModule } from './home-routing.module';
 // components
 import { TerminalComponent } from './components/terminal/terminal.component';
 import { SvgFaceComponent } from './components/svg-face/svg-face.component';
-import { GitbubCornerComponent } from './components/github-corner/gitbub-corner.component';
+import { GithubCornerComponent } from './components/github-corner/github-corner.component';
 
 // pages
 import { HomeComponent } from './pages/home/home.component';
@@ -16,7 +16,7 @@ import { HomeComponent } from './pages/home/home.component';
         // components
         TerminalComponent,
         SvgFaceComponent,
-        GitbubCornerComponent,
+        GithubCornerComponent,
         // pages
         HomeComponent,
     ],

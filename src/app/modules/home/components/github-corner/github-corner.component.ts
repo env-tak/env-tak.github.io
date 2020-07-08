@@ -5,10 +5,7 @@ import { Component, Input } from '@angular/core';
     templateUrl: './github-corner.component.html',
     styleUrls: ['./github-corner.component.scss']
 })
-export class GitbubCornerComponent {
+export class GithubCornerComponent {
 
     @Input() githubURL = 'https://github.com/env-tak/env-tak.github.io';
-
-    constructor() {
-    }
 }
